@@ -1,11 +1,16 @@
-import Backbone from 'backbone';
+import {Backbone, Store} from 'backbone';
 
 let app = {};
 
-app.PokemonList = Backbone.Model.extend({
+app.Pokemon = Backbone.Model.extend({
 	defaults: {
-		pokemons: []
+		name: '';
 	}
+});
+
+app.PokemonList = Backbone.Collection.extend({
+	model: app.Pokemon,
+	localStorage: new Store("backbone-pokemon");
 });
 
 const AppView = Backbone.View.extend({
