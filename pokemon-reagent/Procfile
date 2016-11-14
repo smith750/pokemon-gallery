@@ -1,0 +1,1 @@
+web: java $JVM_OPTS -cp target/pokemon-reagent.jar clojure.main -m pokemon-reagent.server
