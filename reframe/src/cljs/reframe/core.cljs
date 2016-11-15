@@ -21,4 +21,5 @@
   (routes/app-routes)
   (dev-setup)
   (re-frame/dispatch-sync [:initialize-db])
-  (mount-root))
+  (mount-root)
+  (re-frame/dispatch-sync [:load-pokemon-data]))

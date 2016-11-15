@@ -5,9 +5,19 @@
 (re-frame/reg-sub
  :name
  (fn [db]
-   (:name db)))
+   (:name @db)))
 
 (re-frame/reg-sub
  :active-panel
- (fn [db _]
-   (:active-panel db)))
+ (fn [db]
+   (:active-panel @db)))
+
+(re-frame/reg-sub
+  :pokemon
+  (fn [db]
+    (:pokemon @db)))
+
+(re-frame/reg-sub
+  :pokemon-count
+  (fn [db]
+    (:pokemon-count @db)))

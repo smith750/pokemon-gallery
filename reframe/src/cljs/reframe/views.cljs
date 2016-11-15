@@ -8,20 +8,24 @@
     [:td (:name pokemon-record)]])
 
 (defn pokemon-table []
-  (let [pokemon (re-frame/subscribe :pokemon)]
+  (let [pokemon (re-frame/subscribe [:pokemon])
+        pokemon-count (re-frame/subscribe [:pokemon-count])]
     (fn []
     [:table
+      [:thead
       [:tr
-        [:th "Pokemon"]]
-      ;;(map @pokemon #([pokemon-row %]))
-      ])))
+        [:th "Pokemon"]]]
+      [:tbody
+      (for [pokemon-record @pokemon] ^{:key pokemon-record} [pokemon-row pokemon-record])
+      ]])))
 
 (defn home-panel []
   (let [name (re-frame/subscribe [:name])]
     (fn []
       [:div (str "Hello from " @name ". This is the Home Page.")
        [:div [:a {:href "#/about"} "go to About Page"]]
-      [:div [pokemon-table]]])))
+       [pokemon-table]
+      ])))
 
 
 ;; about
@@ -45,5 +49,6 @@
 
 (defn main-panel []
   (let [active-panel (re-frame/subscribe [:active-panel])]
+    (println "active panel = " active-panel)
     (fn []
       [show-panel @active-panel])))

@@ -1,6 +1,8 @@
-(ns reframe.db)
+(ns reframe.db
+  (:require [reagent.core :as reagent]))
 
-(def default-db
+(def default-db (reagent/atom
   {:name "re-frame"
    :pokemon []
-   :pokemon-count -1})
+   :pokemon-count -1
+   :active-panel :home-panel}))
