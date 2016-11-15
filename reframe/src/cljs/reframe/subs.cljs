@@ -15,9 +15,12 @@
 (re-frame/reg-sub
   :pokemon
   (fn [db]
-    (:pokemon @db)))
+    {
+      :pokemon (:pokemon @db)
+      :pokemon-count (:pokemon-count @db)
+    }))
 
 (re-frame/reg-sub
-  :pokemon-count
+  :pokemon-loaded
   (fn [db]
-    (:pokemon-count @db)))
+    (:pokemon-loaded @db)))

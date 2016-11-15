@@ -5,26 +5,37 @@
 ;; home
 (defn pokemon-row [pokemon-record]
   [:tr
-    [:td (:name pokemon-record)]])
+    [:td [:a {:href (str "#/pokemon-detail/" (:pokemon-id pokemon-record))} (:name pokemon-record)]]])
 
 (defn pokemon-table []
-  (let [pokemon (re-frame/subscribe [:pokemon])
-        pokemon-count (re-frame/subscribe [:pokemon-count])]
+  ;(let [{:keys [pokemon pokemon-count]} (re-frame/subscribe [:pokemon])]
+  (let [pokemon-map (re-frame/subscribe [:pokemon])]
     (fn []
+      (println "drawing pokemon table " @pokemon-map)
     [:table
       [:thead
       [:tr
         [:th "Pokemon"]]]
       [:tbody
-      (for [pokemon-record @pokemon] ^{:key pokemon-record} [pokemon-row pokemon-record])
+      (for [pokemon-record (:pokemon @pokemon-map)] ^{:key pokemon-record} [pokemon-row pokemon-record])
       ]])))
+
+(defn loading-pokemon []
+  [:div "Loading..."])
+
+(defn pokemon-table-display []
+  (let [pokemon-loaded (re-frame/subscribe [:pokemon-loaded])]
+    (if @pokemon-loaded
+      [pokemon-table]
+      [loading-pokemon]
+      )))
 
 (defn home-panel []
   (let [name (re-frame/subscribe [:name])]
     (fn []
       [:div (str "Hello from " @name ". This is the Home Page.")
+       [pokemon-table-display]
        [:div [:a {:href "#/about"} "go to About Page"]]
-       [pokemon-table]
       ])))
 
 

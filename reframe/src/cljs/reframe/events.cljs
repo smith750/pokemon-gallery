@@ -26,13 +26,12 @@
           new-pokemon-records (map #(utils/build-basic-pokemon-record %) (:results pokemon-data))
           new-pokemon (concat (:pokemon @db) new-pokemon-records)
           next-uri (:next pokemon-data)
-          updated-db (swap! db assoc :pokemon new-pokemon)]
+          pokemon-loaded (nil? next-uri)
+          updated-db (swap! db assoc :pokemon new-pokemon :pokemon-loaded pokemon-loaded)]
     (println "really processing data..., db = " db)
     (if (nil? next-uri)
         { :db db }
         { :db db
-        ;{ :db (swap! db assoc :pokemon new-pokemon)}
-        ;{ :db (swap! db assoc :pokemon new-pokemon)
           :dispatch [:load-pokemon-data next-uri] }
     )
     )))
