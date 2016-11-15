@@ -22,4 +22,4 @@
   (dev-setup)
   (re-frame/dispatch-sync [:initialize-db])
   (mount-root)
-  (re-frame/dispatch-sync [:load-pokemon-data]))
+  (re-frame/dispatch-sync [:load-pokemon-data "http://pokeapi.co/api/v2/pokemon"]))
