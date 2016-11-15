@@ -17,26 +17,25 @@
     { :http-xhrio (utils/build-http-request uri)
       :db db}))
 
-(re-frame/reg-event-db
+(re-frame/reg-event-fx
   :process-pokemon-list
-  (fn [db [_ pokemon-data]]
+  (fn [{:keys [db]} [_ pokemon-data]]
     (println "processing data...")
     (let [curr-count (:pokemon-count @db)
           new-count (:count pokemon-data)
           new-pokemon-records (map #(utils/build-basic-pokemon-record %) (:results pokemon-data))
           new-pokemon (concat (:pokemon @db) new-pokemon-records)
           next-uri (:next pokemon-data)
-          updated-db (assoc @db :pokemon new-pokemon)]
+          updated-db (swap! db assoc :pokemon new-pokemon)]
     (println "really processing data..., db = " db)
-    (swap! db assoc :pokemon new-pokemon)
-    ; (if (nil? next-uri)
-    ;     { :db (assoc @db :pokemon new-pokemon) }
-    ;     { :db (assoc @db :pokemon new-pokemon) }
-    ;     ;{ :db (swap! db assoc :pokemon new-pokemon)}
-    ;     ;{ :db (swap! db assoc :pokemon new-pokemon)
-    ;     ;  :dispatch [:load-pokemon-data next-uri]}
-    ; )
-    db)))
+    (if (nil? next-uri)
+        { :db db }
+        { :db db
+        ;{ :db (swap! db assoc :pokemon new-pokemon)}
+        ;{ :db (swap! db assoc :pokemon new-pokemon)
+          :dispatch [:load-pokemon-data next-uri] }
+    )
+    )))
 
 (re-frame/reg-event-db
   :process-pokemon-list-failure
