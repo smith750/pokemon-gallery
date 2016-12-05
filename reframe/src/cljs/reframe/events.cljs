@@ -20,7 +20,6 @@
 (re-frame/reg-event-fx
   :process-pokemon-list
   (fn [{:keys [db]} [_ pokemon-data]]
-    (println "processing data...")
     (let [curr-count (:pokemon-count @db)
           new-count (:count pokemon-data)
           new-pokemon-records (map #(utils/build-basic-pokemon-record %) (:results pokemon-data))
@@ -28,7 +27,6 @@
           next-uri (:next pokemon-data)
           pokemon-loaded (nil? next-uri)
           updated-db (swap! db assoc :pokemon new-pokemon :pokemon-loaded pokemon-loaded)]
-    (println "really processing data..., db = " db)
     (if (nil? next-uri)
         { :db db }
         { :db db

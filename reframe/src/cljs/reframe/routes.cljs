@@ -24,6 +24,9 @@
   (defroute "/about" []
     (re-frame/dispatch [:set-active-panel :about-panel]))
 
+  (defroute "/pokemon-detail/:id" {:as params}
+    (re-frame/dispatch [:set-active-panel :detail-panel (:id params)]))
+
 
   ;; --------------------
   (hook-browser-navigation!))

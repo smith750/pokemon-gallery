@@ -11,7 +11,6 @@
   ;(let [{:keys [pokemon pokemon-count]} (re-frame/subscribe [:pokemon])]
   (let [pokemon-map (re-frame/subscribe [:pokemon])]
     (fn []
-      (println "drawing pokemon table " @pokemon-map)
     [:table
       [:thead
       [:tr
@@ -46,12 +45,18 @@
     [:div "This is the About Page."
      [:div [:a {:href "#/"} "go to Home Page"]]]))
 
+;; pokemon detail panel
+
+(defn pokemon-detail-panel [_ pokemon-id]
+  (fn []
+    [:div (str "We will show info about pokemon stuff here... " pokemon-id)]))
 
 ;; main
 
 (defmulti panels identity)
 (defmethod panels :home-panel [] [home-panel])
 (defmethod panels :about-panel [] [about-panel])
+(defmethod panels :detail-panel [pokemon-id] [pokemon-detail-panel pokemon-id])
 (defmethod panels :default [] [:div])
 
 (defn show-panel

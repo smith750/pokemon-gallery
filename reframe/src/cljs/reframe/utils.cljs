@@ -18,4 +18,5 @@
     :name (:name pokemon-data-row)
     :pokemon-id (extract-pokemon-id (:url pokemon-data-row))
     :uri (:url pokemon-data-row)
+    :loaded false
     })
